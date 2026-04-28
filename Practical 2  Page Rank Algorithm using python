@@ -1,0 +1,53 @@
+import numpy as np
+nodes = ['A', 'B', 'C', 'D']
+n = len(nodes)
+
+# Adjacency matrix
+M = [[0, 0, 0, 1],
+     [1, 0, 0, 1],
+     [0, 1, 0, 0],
+     [0, 1, 0, 0]]
+M = np.array(M, dtype=float)
+
+# Normalize columns
+for j in range(n):
+    col_sum = np.sum(M[:, j])
+    if col_sum != 0:
+        M[:, j] = M[:, j] / col_sum
+
+# Initial rank
+rank = np.ones(n) / n
+
+d = 0.85
+iterations = 2
+
+# PageRank calculation
+for _ in range(iterations):
+    rank = (1 - d) / n + d * np.dot(M, rank)
+
+# Display results
+for i in range(n):
+    print(f"PageRank of {nodes[i]}: {round(rank[i], 4)}")
+
+
+
+
+#2nd Part
+import networkx as nx
+# Create a directed graph
+G = nx.DiGraph()
+
+# Add edges
+G.add_edges_from([
+    ('A', 'B'),
+    ('B', 'D'),
+    ('C', 'B'),
+    ('D', 'B')
+])
+
+# Compute PageRank
+pr = nx.pagerank(G, alpha=0.85)
+
+# Display results
+for node, value in pr.items():
+    print(f"PageRank of {node}: {round(value, 4)}")
