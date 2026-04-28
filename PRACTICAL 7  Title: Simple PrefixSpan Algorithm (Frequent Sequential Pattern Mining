@@ -1,0 +1,48 @@
+# Simple PrefixSpan (basic frequent sequence mining)
+
+print("Abuzar Ansari")
+print("=================================")
+
+# Input sequences
+sequences = [
+    ['A', 'B', 'C'],
+    ['A', 'C'],
+    ['A', 'B'],
+    ['B', 'C'],
+    ['A', 'B', 'C']
+]
+
+min_support = 2
+
+# Count item frequency
+def get_frequent_items(seqs, min_support):
+    freq = {}
+    for seq in seqs:
+        counted = set()  # avoid duplicate counting in same sequence
+        for item in seq:
+            if item not in counted:
+                freq[item] = freq.get(item, 0) + 1
+                counted.add(item)
+    return {k: v for k, v in freq.items() if v >= min_support}
+
+# PrefixSpan function
+def prefixspan(prefix, sequences):
+    items = get_frequent_items(sequences, min_support)
+
+    for item in items:
+        new_prefix = prefix + [item]
+        print("Pattern:", new_prefix, "Support:", items[item])
+
+        # Build projected database
+        new_sequences = []
+        for seq in sequences:
+            if item in seq:
+                index = seq.index(item)
+                new_sequences.append(seq[index + 1:])
+
+        if new_sequences:
+            prefixspan(new_prefix, new_sequences)
+
+# Run algorithm
+print("Frequent Sequential Patterns:\n")
+prefixspan([], sequences)
