@@ -1,0 +1,75 @@
+import pandas as pd
+from mlxtend.preprocessing import TransactionEncoder
+from mlxtend.frequent_patterns import apriori, association_rules
+
+print("Abuzar Ansari")
+print("=================================")
+
+# Case Study: Market Basket Transactions
+transactions = [
+    ['milk', 'bread', 'butter'],
+    ['bread', 'butter'],
+    ['milk', 'bread'],
+    ['milk', 'bread', 'butter', 'eggs'],
+    ['bread', 'eggs']
+]
+
+# Convert to format required by Apriori
+te = TransactionEncoder()
+te_array = te.fit(transactions).transform(transactions)
+
+df = pd.DataFrame(te_array, columns=te.columns_)
+
+# Apply Apriori Algorithm
+frequent_itemsets = apriori(df, min_support=0.5, use_colnames=True)
+
+print("Frequent Itemsets:")
+print(frequent_itemsets)
+
+# Generate Association Rules
+rules = association_rules(frequent_itemsets, metric="confidence", min_threshold=0.7)
+
+print("\nAssociation Rules:")
+print(rules[['antecedents', 'consequents', 'support', 'confidence']])
+
+
+vectorizer = TfidfVectorizer()
+
+tfidf_matrix = vectorizer.fit_transform(documents + query)
+
+print("Abuzar Ansari")
+print("=================================")
+
+print("TF-IDF Matrix:")
+print(tfidf_matrix)
+
+
+doc_vectors=tfidf_matrix[:-1]
+query_vectros=tfidf_matrix[-1]
+
+print("Doc vec:")
+print(doc_vectors)
+
+print("Query Vec:")
+print(query_vectros)
+
+
+sim_score=cosine_similarity(query_vectros,doc_vectors)
+print("Similarity Score:")
+print(sim_score)
+
+results = pd.DataFrame({
+    "Document": documents,
+    "Similarity Score": sim_score[0]
+})
+
+# Sort by similarity score (highest first)
+results = results.sort_values(by="Similarity Score", ascending=False)
+
+print("Abuzar Ansari")
+print("=================================")
+
+print("Relevant Documents:\n")
+print(results)
+
+
