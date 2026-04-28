@@ -1,0 +1,23 @@
+documents = {    "Doc1": "data mining is useful",
+    "Doc2": "data science uses machine learning",
+    "Doc3": "machine learning is part of ai",
+    "Doc4": "web mining and data mining"}
+print("Documents are:")
+print(documents)
+
+inverted_index = {}
+
+for doc_id, text in documents.items():
+    words = text.split()
+
+    for word in words:
+        if word not in inverted_index:
+            inverted_index[word] = []
+
+        if doc_id not in inverted_index[word]:
+            inverted_index[word].append(doc_id)
+
+for word, doc_list in inverted_index.items():
+    print(word, "->", doc_list)
+
+
