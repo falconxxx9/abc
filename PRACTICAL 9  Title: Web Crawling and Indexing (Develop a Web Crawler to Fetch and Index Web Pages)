@@ -1,1 +1,146 @@
+import requests
+from bs4 import BeautifulSoup
+
+print("Abuzar Ansari")
+print("=================================")
+print("All libraries are imported!")
+
+urls = [
+    "https://en.wikipedia.org/wiki/Machine_learning",
+    "https://en.wikipedia.org/wiki/Data_mining",
+    "https://en.wikipedia.org/wiki/Web_crawler"
+]
+
+print("Abuzar Ansari")
+print("=================================")
+print("URLs are loaded!")
+print(urls)
+
+
+index = {}
+
+for url in urls:
+    print("Crawling:", url)
+
+    try:
+        response = requests.get(url, timeout=5)
+        soup = BeautifulSoup(response.text, "html.parser")
+
+        # Extract text
+        text = soup.get_text().lower()
+        words = text.split()
+
+        for word in words:
+            word = word.strip().replace(",", "").replace(".", "")
+
+            if len(word) > 2:  # ignore small words like "is", "to"
+                if word not in index:
+                    index[word] = set()
+
+                index[word].add(url)
+
+    except Exception as e:
+        print("Error:", e)
+
+print("Abuzar Ansari")
+print("=================================")
+print("Crawling is completed !!!")
+
+
+print("\nSample Inverted Index:\n")
+
+print("Abuzar Ansari")
+print("=================================")
+
+count = 0
+
+for word, links in index.items():
+    print(word, "->", list(links))
+
+    count += 1
+
+    if count == 20:  # show only first 20 entries
+        break
+
+
+
+
+UNIVERSAL CRAWLING
+
+import requests
+from bs4 import BeautifulSoup
+from urllib.parse import urljoin
+
+print("Abuzar Ansari")
+print("=================================")
+
+visited = set()
+
+def universal_crawler(url, depth):
+    if depth == 0 or url in visited:
+        return
+
+    visited.add(url)
+
+    try:
+        response = requests.get(url, timeout=5)
+        soup = BeautifulSoup(response.text, 'html.parser')
+
+        print("Visited:", url)
+
+        for link in soup.find_all('a', href=True):
+            new_url = urljoin(url, link['href'])
+            universal_crawler(new_url, depth - 1)
+
+    except Exception as e:
+        print("Error:", e)
+
+# Start crawling
+start_url = "https://en.wikipedia.org/wiki/Web_crawler"
+universal_crawler(start_url, 2)
+
+
+
+Title: Topical Crawling
+
+import requests
+from bs4 import BeautifulSoup
+from urllib.parse import urljoin
+
+print("Abuzar Ansari")
+print("=================================")
+
+visited = set()
+topic = "python"
+
+def is_relevant(text):
+    return topic.lower() in text.lower()
+
+def topical_crawler(url, depth):
+    if depth == 0 or url in visited:
+        return
+
+    visited.add(url)
+
+    try:
+        response = requests.get(url, timeout=5)
+        soup = BeautifulSoup(response.text, 'html.parser')
+
+        page_text = soup.get_text()
+
+        # Check if page is relevant
+        if is_relevant(page_text):
+            print("Relevant Page:", url)
+
+            for link in soup.find_all('a', href=True):
+                new_url = urljoin(url, link['href'])
+                topical_crawler(new_url, depth - 1)
+
+    except Exception as e:
+        print("Error:", e)
+
+# Start crawling
+start_url = "https://docs.python.org/3/"
+topical_crawler(start_url, 2)
+
 
