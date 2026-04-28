@@ -1,0 +1,70 @@
+# Web Mining Practical 1 Data Preprocessing
+
+print("Data Preprocessing")
+import pandas as pd
+df = pd.read_csv('SampleDataset.csv')
+print("Abuzar Ansari")
+print(df)
+
+print("Abuzar Ansari")
+print("==============================================")
+print(df.info())
+
+print(df["Name"])
+
+print(df.columns)
+
+print(df.isnull())
+print(df["Name"].isnull())
+
+print(df["Name"].isnull())
+df["Name"].fillna("Abuzar", inplace=True)
+print(df["Name"])
+
+
+print("Abuzar Ansari")
+print("==============================================")
+
+print(df["Name"].isnull())
+
+print("Dataset before dropping:")
+print(df["Name"])
+df.dropna(inplace=True)
+print("Dataset after dropping:")
+print(df["Name"])
+
+
+print("Abuzar Ansari")
+print("==============================================")
+
+print(df.info())
+
+print("Column Names:")
+print(df.columns)
+print("Name column:")
+print(df["Name"])
+print("Lowercase Names:")
+print(df["Name"].str.lower())
+print("Uppercase Names:")
+print(df["Name"].str.upper())
+
+
+print("Abuzar Ansari")
+print("==============================================")
+
+#for outliers
+import numpy as np
+data = {'Value': [55, 1110, 15, 14, 13, 12, 10, 11, 12, 14, 10]}
+df = pd.DataFrame(data)
+print("Dataset:")
+print(df)
+# Calculate IQR
+Q1 = df['Value'].quantile(0.25)
+Q3 = df['Value'].quantile(0.75)
+IQR = Q3 - Q1
+# Define bounds
+lower_bound = Q1 - 1.5 * IQR
+upper_bound = Q3 + 1.5 * IQR
+# Identify outliers
+outliers = df[(df['Value'] < lower_bound) | (df['Value'] > upper_bound)]
+print("Outliers:\n", outliers)
