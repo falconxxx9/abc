@@ -1,0 +1,75 @@
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.naive_bayes import MultinomialNB
+
+print("Abuzar Ansari")
+print("All Libraries Imported!")
+
+messages = [
+    "win money",
+    "free money",
+    "call now",
+    "hello friend",
+    "how are you",
+    "see you tomorrow"
+]
+
+labels = [1, 1, 1, 0, 0, 0]  # 1 = Spam, 0 = Not Spam
+
+print("Abuzar Ansari")
+print("=================================")
+
+print("Features:")
+print(messages)
+
+print("Target:")
+print(labels)
+
+
+print("Abuzar Ansari")
+print("=================================")
+
+vectorizer = CountVectorizer()
+X = vectorizer.fit_transform(messages)
+
+print("Vectorized Data:")
+print(X)
+
+
+
+print("Abuzar Ansari")
+print("=================================")
+
+model = MultinomialNB()
+
+print("Model is created!")
+print(model)
+
+model.fit(X, labels)
+
+print("Model is trained!")
+
+
+print("Abuzar Ansari")
+print("=================================")
+
+test = ["free money offer", "hello how are you"]
+
+print("Test Data:")
+print(test)
+
+X_test = vectorizer.transform(test)
+
+print("Vectorized Test Data:")
+print(X_test)
+
+result = model.predict(X_test)
+
+print("Model testing is done...")
+
+
+
+print("Abuzar Ansari")
+print("=================================")
+
+for msg, r in zip(test, result):
+    print(msg, "=>", "Spam" if r == 1 else "Not Spam")
